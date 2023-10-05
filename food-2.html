@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myFoods</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+html{
+    font-size: 10px;
+    user-select: none;
+}
+body{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+header{
+    height:30%;
+    width: 100%;
+    padding: 10px;
+}
+header nav{
+    height: 20%;
+    display: flex;
+    padding: 5px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+header nav span{
+    font-size: 2.2rem;
+}
+header .titile{
+    height: 35%;
+    width: 100%;
+}
+.titile h2{
+    font-size: 2.2rem;
+    font-weight: normal;
+    letter-spacing: .1px;
+}
+.titile h2 span{
+    font-size: 2.3rem;
+    font-weight: bold;
+}
+header .search-bar{
+    height: 20%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.search-bar input{
+    width: 80%;
+    height: 100%;
+    border: none;
+    background:#e6e6f7;
+    padding: 0 10px;
+}
+.search-bar input::placeholder{
+    color: black;
+    font: 1.5rem;
+    letter-spacing: .1px;
+}
+.search-bar input:focus{
+    outline: none;
+}
+.search-bar span{
+    height: 100%;
+    width: 10%;
+    background:#e6e6f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+}
+.search-bar span:nth-of-type(1){
+    border-radius: 30% 0 0 30%;
+}
+.search-bar span:nth-of-type(2){
+    border-radius:0 30% 30% 0;
+}
+header .food-catagery{
+    height:25%;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    overflow: hidden;
+}
+.food-catagery li{
+    margin-top:3px ;
+    font-size: 1.4rem;
+    background: rgb(21, 155, 21);
+    color: white;
+    min-width:10rem;
+    height: 3rem;
+    line-height:  3rem;
+    text-align: center;
+    border-radius: 3px;
+}
+.foods{
+    height: auto;
+    width: 100%;
+    display: flex;
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+.foods .food{
+    height: 25rem;
+    width: 15rem;
+    background:#e6e6f7;
+    border: 1px solid #ccc;
+    position: relative;
+    padding: 1rem;
+    border-radius: 8px;
+}
+.food .imgs{
+    height: 60%;
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.food .imgs img{
+    height: 80%;
+    width: 85%;
+    border-radius: 50%;
+}
+.food .like{
+    font-size: 1.7rem;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-weight: bold;
+    color: rgb(205, 204, 207);
+    transition: all 0.2s;
+}
+.food .details{
+    margin-top: 10px;
+    height: 20%;
+    width: 100%;
+}
+.details h2{
+    margin-top: 2px;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+.details p{
+    margin-top: 8px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.details p span{
+    font-size: 1.1rem;
+}
+.food .pricing{
+    height: 10%;
+    width: 100%;
+}
+.food .pricing p{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+.food .pricing p span{
+    margin-top:10px;
+}
+.pricing p span:nth-of-type(1){
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+.pricing p span:nth-of-type(2){
+    height: 2.5rem;
+    width: 2.5rem;
+    background: rgb(21, 155, 21);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+}
+.footer{
+    height: 8%;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    background: white;
+    z-index: 100;
+}
+.footer li{
+    list-style: none;
+}
+.footer li span{
+    font-size: 2.5rem;
+}
+.cart-items{
+    height:auto;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background:#e6e6f7;
+    display: none;
+}
+.cart-items #titile{
+    min-height: 8%;
+    width: 100%;
+    font-size: 1.8rem;
+    font-weight: normal;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 1.5rem;
+    background: white;
+    padding-top: 1rem;
+    border-bottom: 1px solid #ccc;
+    z-index: 5;
+}
+.cart-items #cart-close{
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    z-index: 10;
+    font-size: 2.5rem;
+    color: blue;
+    font-weight: bold;
+}
+.cart-items .cart-footer{
+    height:8%;
+    position: fixed;
+    background: white;
+    bottom:8%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    border-top:1px solid #ccc;
+    z-index: 10;
+}
+.cart-footer .pr #dis{
+    font-size: 1rem;
+    text-decoration:line-through;
+}
+.cart-footer  #price{
+    margin-top: .8rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.cart-footer #orderButton{
+    color: black;
+    font-weight: bold;
+    background: yellow;
+    padding: .6rem 1.6rem;
+    border: none;
+    font-size: 1.3rem;
+    border-radius:4px;
+}
+.cart-items .cart-cont{
+    height:100vh;
+    width: 100%;
+    margin-top:18%;
+    display: flex;
+    background:#e6e6f7;
+    flex-direction: column;
+    gap: 1rem;
+}
+.cart-cont .item{
+    min-height: 25%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    background: white;
+}
+.item .imgs{
+    margin-top: .7rem;
+    max-height:70%;
+    align-self: flex-start;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+.imgs img{
+    min-height: 10%;
+    width: 50%;
+    border-radius:2px;
+}
+.imgs #qty{
+    padding:.2rem .7rem;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+#qty:focus{
+    outline: none;
+}
+.item .cart-item-footer{
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height:3rem;
+    width: 100%;
+}
+.cart-item-footer span{
+    height: 100%;
+    width: 20rem;
+    border-right:1px solid #ccc ;
+    text-align: center;
+    line-height: 3rem;
+    border-top:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+}
+.item .cart-details{
+    height: 100%;
+    width: 70%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.cart-details .fname{
+    font-size: 1.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.cart-details .time{
+    display: flex;
+    justify-content: space-between;
+    color: green;
+    font-size: 1.1rem;
+}
+.cart-details #price{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.cart-details #off{
+    color: red;
+}
+.cart-active{
+    display: block;
+}
+.cart-item-footer span>span{
+    color: blue;
+    border: none;
+    font-size: 1.5rem;
+}
+.like-active{
+    color: red !important;
+    transform: scale(1.2);
+}
+.fullscreen{
+    height: 100vh;
+    width: 100%;
+    background: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+.fullscreen .ffooter{
+    height: 10%;
+    width: 100%;
+    position: absolute;
+    bottom: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    background: white;
+    border-top: 1px solid #ccc;
+}
+.fullscreen .ffooter button{
+    padding: 1rem 3rem;
+    background: rgba(5, 186, 59, 0.945);
+    color: white;
+    border: none;
+    border-radius:3rem;
+}
+.fullscreen .fheader{
+    height: 10%;
+    width: 100%;
+    padding: 0 2rem;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.fheader span{
+    font-size: 2.5rem;
+}
+.fullscreen .fcon{
+    height: 100%;
+    background:white;
+    display: flex;
+    flex-direction: column;
+}
+.fcon .imgss{
+    height: 25%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:white ;
+    flex-direction: column;
+    gap: 1rem;
+}
+.fcon .imgss img{
+    height: 80%;
+    width: 50%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.imgss .prc{
+    display: inline-flex;
+}
+.prc button,.prc input{
+    background: rgba(5, 186, 59, 0.945);
+    color: white;
+    width: 4rem;
+    height: 2.5rem;
+    border: none;
+    text-align: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.prc input:focus{
+    outline: none;
+}
+.prc button:nth-of-type(1){
+    font-size: 2.5rem;
+    width: 2rem;
+    border-radius:1rem 0 0 1rem;
+}
+.prc button:nth-of-type(2){
+    font-size: 1.8rem;
+    width: 2rem;
+    border-radius:0 1rem 1rem 0;
+}
+.fcon .details{
+    padding: 0 2rem;
+}
+.details h2{
+    font-size: 2rem;
+    font-weight: bold;
+}
+.details p{
+    font-size: 1.3rem;
+    line-height: 2rem;
+    color: #9f9d9d;
+}
+.details p:nth-of-type(2){
+    color: red;
+}
+.details p:nth-of-type(3){
+    color: yellow;
+}
+.details .title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.title{
+    font-size: 2rem;
+}
+.slider{
+    height: 20%;
+    width: 100%;
+    position: absolute;
+    bottom: 25%;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    overflow: hidden;
+    gap: 2rem;
+}
+.slider img{
+    height: 60%;
+    min-width: 18%;
+    object-fit: contain;
+    background: rgb(238, 238, 255);
+    padding: 1rem;
+    border-radius: 3px;
+}
+.user-menu{
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    display: none;
+}
+.user-menu .tool{
+    height: 30%;
+    width: 100%;
+    position: absolute;
+    top: 25%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.tool input{
+    display: none;
+}
+.tool label{
+    height: 57%;
+    width: 35%;
+    background: rgb(236, 236, 236);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: gray;
+}
+.user-menu .profile{
+    height: 100%;
+    width: 100%;
+    background: white;
+}
+.user-menu .udetails{
+    height:60%;
+    width: 100%;
+    background:rgba(0, 0, 0, 0.887);
+    position: absolute;
+    top: 40%;
+    border-radius:2rem 2rem 0 0;
+    color: white;
+    padding: 2rem;
+}
+.udetails{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.udetails .btns{
+    position: absolute;
+    height: 15%;
+    width: 100%;
+    bottom: 25%;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+.btns button:nth-of-type(1){
+    width: 50%;
+    height: 60%;
+    border: none;
+    border-radius: 5px;
+}
+.btns button:nth-of-type(2){
+    height: 60%;
+    width: 15%;
+    border: none;
+    border-radius: 5px;
+}
+.udetails h2{
+    font-weight: normal;
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: .1px;
+}
+.udetails p{
+    font-size: 1.3rem;
+    word-spacing: .1rem;
+    line-height: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid white;
+}
+.udetails .order{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.order span{
+    padding: 0 1rem;
+    max-width: 6rem;
+    text-align: center;
+    line-height: 1.5rem;
+    font-size: 1rem;
+}
+.profile-dactive{
+    height: 100% !important;
+    top: 0 !important;
+}
+.profile img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.userProfile-active{
+    display: block;
+}
+#back-btn{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 3rem;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <span><ion-icon name="logo-buffer"></ion-icon></span>
+            <span id="cart-menu"><ion-icon name="bag-check-outline"></ion-icon></span>
+        </nav>
+        <div class="titile">
+            <h2>Get Your <span>Best<br> Food</span> Around You</h2>
+        </div>
+        <div class="search-bar">
+            <span><ion-icon name="search-outline"></ion-icon></span>
+            <input type="text" placeholder="Search your favorite food">
+            <span><ion-icon name="options-outline"></ion-icon></span>
+        </div>
+        <div class="food-catagery">
+            <li>Salads</li>
+            <li>Fruits</li>
+            <li>Popularity</li>
+            <li>Veg</li>
+            <li>non veg</li>
+            <li>ice cream</li>
+        </div>
+    </header>
+    <div class="foods">
+        <!--foods to be store-->
+    </div>
+    <div class="cart-items">
+        <h2 id="titile">My Cart</h2>
+        <h2 id="cart-close"><ion-icon name="close-outline"></ion-icon></h2>
+        <div class="cart-cont">
+            <!--cart item will be added-->
+        </div>
+        <div class="cart-footer">
+            <div class="pr">
+                <span id="dis">7222</span>
+                <h2 id="price">Rs.2000</h2>
+            </div>
+            <button id="orderButton">Place order</button>
+        </div>
+    </div>
+    <div class="fullscreen">
+        <div class="fheader">
+            <span class="back-arrow"><ion-icon name="arrow-undo-outline"></ion-icon></span>
+            <span id="shop"><ion-icon name="card-outline"></ion-icon></span>
+        </div>
+        <div class="fcon">
+            <div class="imgss">
+                <img src="/images/chilli.jpg" alt="n">
+                <div class="prc">
+                    <button id="minqty">-</button>
+                    <input type="number" value="1" max="10" min="1">
+                    <button id="addqty">+</button>
+                </div>
+            </div>
+            <div class="details">
+                <div class="title">
+                    <h2>food name</h2>
+                    <span><ion-icon name="heart-outline"></ion-icon></span>
+                </div>
+                <p>My shop provide only high ginic foods and  fast delivery in 10 min <br> without extra charge</p>
+                <p id="off">3 offers available</p>
+                <p id="del">Book to Home Delivery</p>
+            </div>
+        </div>
+        <div class="slider">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/fruits-vegetables/olive-icon.svg" alt="">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/fruits-vegetables/coconut-with-straw-icon.svg" alt="">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/fitness-gym-yoga-spa/nutrition-icon.svg" alt="">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/fruits-vegetables/blueberry-icon.svg" alt="">
+        </div>
+        <div class="ffooter">
+            <div class="pr">
+                <span id="dis">7222</span>
+                <h2 id="price">Rs.2000</h2>
+            </div>
+            <button id="orderButton">Add To Cart</button>
+        </div>
+    </div>
+    <div class="user-menu">
+        <h2 id="back-btn"><ion-icon name="arrow-back"></ion-icon></h2>
+        <div class="tool">
+            <label for="img-input"><ion-icon name="person"></ion-icon></label>
+        <input type="file" id="img-input">
+        </div>
+        <div class="profile">
+
+        </div>
+        <div class="udetails">
+            <h2>Bala <span><ion-icon name="resize" id="fulld"></ion-icon></span></h2>
+            <p>Hi, my name is Muthu bala,and i am a beginner UI/UX designer for web application</p>
+            <div class="order">
+                <span>12 Foods order</span>
+                <span>20% cashpack earn</span>
+                <span>4 food Reviews</span>
+            </div>
+            <div class="btns">
+                <button>Edit Profile</button>
+                <button><ion-icon name="mail-unread-outline"></ion-icon></button>
+            </div>
+        </div>
+    </div>
+    <div class="footer menu">
+        <li><span><ion-icon name="home"></ion-icon></span></li>
+        <li><span><ion-icon name="search"></ion-icon></span></li>
+        <li><span><ion-icon name="grid-outline"></ion-icon></span></li>
+        <li><span><ion-icon name="heart-outline"></ion-icon></span></li>
+        <li id="userpage"><span><ion-icon name="person-circle-outline"></ion-icon></span></li>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        const cartclose=document.querySelector("#cart-close");
+const cartmenu=document.querySelector("#cart-menu");
+const cartcon=document.querySelector(".cart-items");
+const foodContainer=document.querySelector('.foods');
+const cartContainer=document.querySelector('.cart-cont');
+const fullscreenCont=document.querySelector('.fullscreen');
+const body=document.querySelector('body');
+const backbtn=document.querySelector('.back-arrow');
+//fetch food items
+
+document.addEventListener("DOMContentLoaded",()=>{
+    fetchfoodItems();
+    let cartbtns=document.querySelectorAll('.add-tocart');
+    addcartEvent(cartbtns);
+    let heartIcon=document.querySelectorAll('.like');
+    likeItems(heartIcon);
+    let fooditemsShow=document.querySelectorAll('.food');
+    showfoodDetails(fooditemsShow);
+})
+function fetchfoodItems(){
+    foods=webFile()
+    foods.forEach((food)=>{
+        li=createElements();
+        li.innerHTML=changeCode(food.foodname,food.price,food.img,food.time);
+        foodContainer.append(li);
+    })
+}
+//liked items
+function likeItems(hearts){
+    hearts.forEach((heart)=>{
+        heart.addEventListener('click',(e)=>{
+            e.stopPropagation();
+            heart.classList.toggle('like-active');
+        },true)
+    })
+}
+//create element
+function createElements(){
+    let  div=document.createElement('div');
+    div.className='food';
+    return div;
+}
+//chage html code
+function changeCode(fname,price,img,time){
+    return  `
+    <span class="like"><ion-icon name="heart"></ion-icon></span>
+            <div class="imgs">
+                <img src="${img}" alt="">
+            </div>
+            <div class="details">
+                <h2>${fname}</h2>
+                <p>
+                    <span>${time} Min</span>
+                    <span><span><ion-icon name="star-outline"></ion-icon></span>  Reviwes</span>
+                </p>
+            </div>
+            <div class="pricing">
+                <p>
+                    <span>Rs.${price}</span>
+                    <span class="add-tocart"><ion-icon name="add"></ion-icon></span>
+                </p>
+            </div>
+    `
+}
+//cart items func
+cartmenu.addEventListener('click',()=>{
+    cartcon.classList.add('cart-active');
+    foodContainer.style.display='none';
+})
+cartclose.addEventListener('click',()=>{
+    cartcon.classList.remove('cart-active');
+    foodContainer.style.display='flex';
+})
+//store cart
+function addcartEvent(cartbtns){
+    cartbtns.forEach((btn)=>{
+        btn.addEventListener('click',(e)=>{
+            e.stopPropagation();
+            let btnParent=btn.parentNode.parentNode.parentNode;
+            let imgsrc=(btnParent.children[1].children[0]).src;
+            let foodname=(btnParent.children[2].children[0]).innerText;
+            let time=(btnParent.children[2].children[1].children[0]).innerText;
+            let price=(btnParent.children[3].children[0].children[0]).innerText;
+            div=createDiv();
+            div.innerHTML=createcartElements(imgsrc,foodname,time,price);
+            cartContainer.append(div);
+            alert("Added in cart");
+            let cartRemovebtn=document.querySelectorAll('.cart-item-delete');
+             removeitemCart(cartRemovebtn);
+        })
+    })
+}
+function createDiv(){
+    let div=document.createElement('div');
+    div.className='item';
+    return div;
+}
+//remove cartelements
+function removeitemCart(btns){
+    btns.forEach((btn)=>{
+        btn.addEventListener('click',()=>{
+            item=btn.parentNode.parentNode;
+            item.remove();
+        })
+    })
+}
+//create cart elements
+function createcartElements(img,name,time,price){
+    return `
+    <div class="imgs">
+                <img src="${img}" alt="img">
+                <select id="qty">
+                    <option value="1">Qty: 1</option>
+                    <option value="2">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                </select>
+            </div>
+            <div class="cart-details">
+                <h2 class="fname">${name}</h2>
+               <div class="time">
+                <span>${time}</span>
+                <span>40% offer</span>
+               </div>
+                <span id="price">${price}</span>
+                <p id="off">3 offers available</p>
+                <p id="del">Book to Home Delivery</p>
+            </div>
+            <div class="cart-item-footer">
+                <span class="cart-item-delete"><span><ion-icon name="trash-outline"></ion-icon></span>  Remove</span>
+                <span><span><ion-icon name="bookmark-outline"></ion-icon></span>  Save</span>
+                <span><span><ion-icon name="flash-outline"></ion-icon></span>  Buy</span>
+            </div>
+    `
+}
+//show fullscreen food items
+function showfoodDetails(items){
+    items.forEach((item)=>{
+       item.addEventListener('click',(e)=>{
+        
+        //sroll top
+        document.body.scrollTop=0;
+        document.documentElement.scrollTop=0;
+
+        body.style.overflow='hidden';
+        let imgsrc=(item.children[1].children[0]).src;
+        let foodname=(item.children[2].children[0]).innerText;
+        let time=(item.children[2].children[1].children[0]).innerText;
+        let price=(item.children[3].children[0].children[0]).innerText;
+
+        fullscreenCont.style.display='block';
+        let fcon=document.querySelector('.fcon');
+        fimg=fcon.children[0].children[0];
+        fname=fcon.children[1].children[0].children[0];
+        fname.innerText=foodname;
+        fimg.src=imgsrc;
+
+       })
+    })
+}
+//back arrow
+backbtn.addEventListener('click',()=>{
+    body.style.overflow='scroll';
+    fullscreenCont.style.display='none';
+})
+//user page
+const userpage=document.querySelector("#userpage");
+const userProfile=document.querySelector(".user-menu");
+const imgin=document.querySelector('#img-input');
+const prof=document.querySelector('.profile');
+const imgLab=document.querySelector('label');
+
+userpage.addEventListener('click',()=>{
+   userProfile.classList.toggle('userProfile-active');
+   if(userProfile.className!='userpage'){
+    body.style.overflow='hidden';
+   }else{
+    body.style.overflow='scroll';
+   }
+})
+//full screen details
+const arrow=document.querySelector('#fulld');
+const profild=document.querySelector('.udetails');
+fulld.addEventListener('click',()=>{
+    profild.classList.toggle('profile-dactive');
+})
+let img=document.createElement('img');
+imgin.addEventListener('change',()=>{
+    const image=imgin.files[0];
+   const reader=new FileReader();
+   reader.onload=()=>{
+    const imgurl=reader.result;
+    img.src=imgurl
+    prof.appendChild(img);
+   }
+   reader.readAsDataURL(image);
+   imgLab.style.display='none';
+})
+function webFile(){
+    jsonFile=[
+        {
+            "foodname":"Briyani",
+            "price":120,
+            "img":"https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":50
+        },
+        {
+            "foodname":"Cake",
+            "price":50,
+            "img":"https://images.pexels.com/photos/2067396/pexels-photo-2067396.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":10
+        },
+        {
+            "foodname":"Burger",
+            "price":340,
+            "img":"https://images.pexels.com/photos/2454533/pexels-photo-2454533.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":22
+        },
+        {
+            "foodname":"Nets",
+            "price":70,
+            "img":"https://images.pexels.com/photos/3754300/pexels-photo-3754300.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":2
+        },
+        {
+            "foodname":"Chinees",
+            "price":299,
+            "img":"https://images.pexels.com/photos/1833337/pexels-photo-1833337.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":40
+        },
+        {
+            "foodname":"Noodls",
+            "price":89,
+            "img":"https://images.pexels.com/photos/1373915/pexels-photo-1373915.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":3
+        },
+        {
+            "foodname":"Catlet",
+            "price":129,
+            "img":"https://images.pexels.com/photos/3338681/pexels-photo-3338681.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":23
+        },
+        {
+            "foodname":"Panipuri",
+            "price":29,
+            "img":"https://images.pexels.com/photos/2114062/pexels-photo-2114062.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":90
+        },
+        {
+            "foodname":"Sanveg",
+            "price":51,
+            "img":"https://images.pexels.com/photos/12540686/pexels-photo-12540686.png?auto=compress&cs=tinysrgb&w=600",
+            "time":48
+        },
+        {
+            "foodname":"Spices",
+            "price":99,
+            "img":"https://images.pexels.com/photos/2734288/pexels-photo-2734288.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":120
+        },
+        {
+            "foodname":"Chery",
+            "price":120,
+            "img":"https://images.pexels.com/photos/35629/bing-cherries-ripe-red-fruit.jpg?auto=compress&cs=tinysrgb&w=600",
+            "time":11
+        },
+        {
+            "foodname":"Manga",
+            "price":39,
+            "img":"https://images.pexels.com/photos/2122951/pexels-photo-2122951.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":72
+        },
+        {
+            "foodname":"French Fries",
+            "price":119,
+            "img":"https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":62
+        },
+        {
+            "foodname":"Fresh Jusice",
+            "price":49,
+            "img":"https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":37
+        },
+        {
+            "foodname":"Fish Items",
+            "price":69,
+            "img":"https://images.pexels.com/photos/2042591/pexels-photo-2042591.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":21
+        },
+        {
+            "foodname":"Prawn",
+            "price":300,
+            "img":"https://images.pexels.com/photos/1998920/pexels-photo-1998920.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":67
+        },
+        {
+            "foodname":"Buttur",
+            "price":210,
+            "img":"https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":81
+        },
+        {
+            "foodname":"Souls",
+            "price":90,
+            "img":"https://images.pexels.com/photos/2551599/pexels-photo-2551599.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":90
+        },
+        {
+            "foodname":"Badam",
+            "price":73,
+            "img":"https://images.pexels.com/photos/6802627/pexels-photo-6802627.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":89
+        },
+        {
+            "foodname":"Dossa",
+            "price":39,
+            "img":"https://images.pexels.com/photos/2067408/pexels-photo-2067408.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":1
+        },
+        {
+            "foodname":"Coffe",
+            "price":29,
+            "img":"https://images.pexels.com/photos/16494010/pexels-photo-16494010/free-photo-of-trays-with-cups-of-coffee-and-a-piece-of-cake.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":0
+        },
+        {
+            "foodname":"Cholates",
+            "price":5,
+            "img":"https://images.pexels.com/photos/4016512/pexels-photo-4016512.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "time":2
+        }
+    ];
+    return jsonFile;
+}
+    </script>
+</body>
+</html>
